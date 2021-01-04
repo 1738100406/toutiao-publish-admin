@@ -1,10 +1,21 @@
 <template>
-  <div>home</div>
+  <div>首页</div>
 </template>
 
 <script>
 export default {
-  components: {},
+  data() {
+    return {}
+  },
+
+  computed: {},
+
   methods: {},
-};
+
+  created() {},
+  mounted() {},
+  components: {},
+}
 </script>
+
+<style scoped></style>
