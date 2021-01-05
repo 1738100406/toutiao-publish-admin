@@ -13,6 +13,7 @@ const routes = [
     children: [
       { path: "/", component: home },
       { path: "/article", component: () => import("../views/article/article") },
+      { path: "/publish", component: () => import("../views/article/publish") },
     ],
   },
 ]

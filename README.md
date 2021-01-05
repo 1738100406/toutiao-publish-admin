@@ -24,6 +24,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 13911111111
 
+17090086870
+
 246810
 
 ### 创建组件并配置路由
@@ -86,5 +88,40 @@ data(){
         ]
 	}
 }
+```
+
+```
+//时间格式化处理
+<el-date-picker
+    v-model="form.date"
+    type="datetimerange"
+    start-placeholder="开始日期"
+    end-placeholder="结束日期"
+    :default-time="['12:00:00']"
+    format="yyyy-MM-dd"
+    value-format="yyyy-MM-dd">
+</el-date-picker>
+
+({
+	begin_pubdate: this.form.data ? this.form.data[0] : null,
+	end_pubdate: this.form.data ? this.form.data[1] : null,
+})
+
+```
+
+```
+<el-pagination
+    class="fenye"
+    layout="prev, pager, next"
+    :total="Pagetotal"
+    :page-size="pageSize"
+    @current-change="onpageChange"
+    :disabled="isLoading">
+    :disabled="isLoading" //分页点击加载不请求
+</el-pagination>
+```
+
+```
+请求401 :label="1"
 ```
 
