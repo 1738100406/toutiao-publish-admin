@@ -88,7 +88,12 @@
           </el-table-column>
           <el-table-column prop="control" label="操作">
             <template slot-scope="scope">
-              <el-button type="primary" icon="el-icon-edit" circle></el-button>
+              <el-button
+                @click="$router.push('/publish?id=' + scope.row.id)"
+                type="primary"
+                icon="el-icon-edit"
+                circle
+              ></el-button>
               <el-button
                 @click="ondeleteArticle(scope.row.id)"
                 type="danger"

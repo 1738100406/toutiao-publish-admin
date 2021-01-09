@@ -14,6 +14,8 @@ const routes = [
       { path: "/", component: home },
       { path: "/article", component: () => import("../views/article/article") },
       { path: "/publish", component: () => import("../views/article/publish") },
+      { path: "/image", component: () => import("../views/image/imagemanage") },
+      { path: "/comment", component: () => import("../views/comment/comment") },
     ],
   },
 ]

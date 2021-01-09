@@ -125,3 +125,21 @@ data(){
 请求401 :label="1"
 ```
 
+```
+new Image({
+          uploadRequest(file) {
+            const fd = new FormData()
+            fd.append("image", file)
+            return uploadimg(fd).then((res) => { //上传图片
+            									//第一是return 是返回promise 对象
+              return res.data.data.url
+              									//第二个return 是返回最好的结果
+           })
+        },
+ }),
+```
+
+```
+
+```
+
