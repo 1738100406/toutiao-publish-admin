@@ -6,23 +6,14 @@
     <el-container>
       <el-header class="header">
         <div header-wrap>
-          <i
-            @click="isCollapse = !isCollapse"
-            class="el-icon-s-fold"
-            style="margin-right:10px"
-          ></i>
+          <i @click="isCollapse = !isCollapse" class="el-icon-s-fold" style="margin-right:10px"></i>
           <span>XXX有限公司</span>
         </div>
 
         <el-dropdown>
           <span class="" style="display:flex;align-items: center;">
-            <img
-              :src="user.photo"
-              style="width:50px;height:50px;border-radius:50%;margin-right:10px"
-            />
-            <span
-              >{{ user.name }}<i class="el-icon-arrow-down el-icon--right"></i
-            ></span>
+            <img :src="user.photo" style="width:50px;height:50px;border-radius:50%;margin-right:10px" />
+            <span>{{ user.name }}<i class="el-icon-arrow-down el-icon--right"></i></span>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
@@ -46,8 +37,9 @@
 </template>
 
 <script>
-import Aside from "./components/Aside"
-import { user } from "@/api/user.js"
+import Aside from './components/Aside'
+import { user } from '@/api/user.js'
+import globalBus from '@/utils/global-bus.js'
 export default {
   data() {
     return {
@@ -60,19 +52,23 @@ export default {
 
   methods: {
     getUser() {
-      user().then((res) => {
+      user().then(res => {
         this.user = res.data.data
       })
     },
     //退出登录
     goout() {
       window.localStorage.clear()
-      this.$router.push("/login")
+      this.$router.push('/login')
     },
   },
 
   created() {
     this.getUser()
+    globalBus.$on('update-user', data => {
+      this.user.photo = data.photo
+      this.user.name = data.name
+    })
   },
   mounted() {},
   components: { Aside },

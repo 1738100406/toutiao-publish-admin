@@ -140,6 +140,66 @@ new Image({
 ```
 
 ```
+<div class="img-wrap">
+            <el-avatar style="width:150px;height:150px" shape="square" size="large" :src="form.photo"></el-avatar>
+</div>
+
+上传头像
+<label for="file">
+            选择修改头像
+         <input @change="onChangeAvatar" id="file" type="file" ref="file" hidden />
+  </label>
+  //这里的 lable中for="file" 会触发id="file" 
+
+      
+ 
+ 
+ //图片裁切器必须基于img进行初始化
+//注意:img必须是可见状态才能正常完成初始化
+//获取图片DOM节点
+对话框完全打开
+
+
+//第1次初始化好以后，如果预览裁切的图片发生了变化
+裁切器默认不会更新
+//如果需要预览图片发生变化更新裁切器:
+方式一:裁切器.replace方法
+方式二:销毁裁切器，重新初始化
+初始化裁切器
+
+
+ onChangeAvatar() {
+      const file = this.$refs.file
+      var blobData = window.URL.createObjectURL(file.files[0])
+      console.log(blobData)
+      this.blobData = blobData
+      this.$refs.file.value = '' //解决选择相同文件 不触发change事件
+      this.dialogVisible = true
+},
+//弹窗完全打开 初始化裁切
+ dialogOpened() {
+      this.cropper = new Cropper(this.$refs.image, {
+        aspectRatio: 16 / 9,
+      })
+},
+//弹窗关闭销毁 初始化裁切
+  dialogClosed() {
+      this.cropper.destroy()
+}, 
+//弹窗点击确定
+dialogConfirm() {
+      this.cropper.getCroppedCanvas().toBlob(file => {
+        const fd = new FormData()
+        fd.append('photo' /*, 接口请求字段名 */, file /*, 'example.png' */)
+        // 请求提交
+        console.log(fd)
+        updateUser(fd).then(res => {
+          this.form.photo = res.data.data.photo //方法一 把图片赋值给页面						            //this.form.photo=window.URL.createObjectURL(file)方法二预览图片的链接
+          this.dialogVisible = false
+        })
+      })
+      console.log('confirm')
+},
 
 ```
 

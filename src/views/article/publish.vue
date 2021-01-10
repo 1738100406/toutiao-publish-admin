@@ -3,9 +3,7 @@
     <div slot="header" class="clearfix">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>{{
-          $route.query.id ? "修改文章" : "发布文章"
-        }}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ $route.query.id ? '修改文章' : '发布文章' }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="text item">
@@ -15,12 +13,7 @@
         </el-form-item>
         <el-form-item label="内容">
           <div>
-            <el-tiptap
-              height="350"
-              v-model="article.content"
-              :extensions="extensions"
-              placeholder="请输入文章内容"
-            />
+            <el-tiptap height="350" v-model="article.content" :extensions="extensions" placeholder="请输入文章内容" />
           </div>
         </el-form-item>
         <el-form-item label="封面">
@@ -42,9 +35,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit(false)">{{
-            $route.query.id ? "修改" : "发布"
-          }}</el-button>
+          <el-button type="primary" @click="onSubmit(false)">{{ $route.query.id ? '修改' : '发布' }}</el-button>
           <el-button @click="onSubmit(true)">存入草稿</el-button>
         </el-form-item>
       </el-form>
@@ -53,13 +44,7 @@
 </template>
 
 <script>
-import {
-  getchannels,
-  publishArticle,
-  getArticle,
-  editArticle,
-  uploadimg,
-} from "@/api/article.js"
+import { getchannels, publishArticle, getArticle, editArticle, uploadimg } from '@/api/article.js'
 import {
   ElementTiptap,
   Doc,
@@ -83,19 +68,19 @@ import {
   CodeView,
   Image,
   FormatClear,
-} from "element-tiptap"
+} from 'element-tiptap'
 export default {
   data() {
     return {
       channelList: [],
       article: {
-        title: "",
-        content: "",
+        title: '',
+        content: '',
         cover: {
           type: 1,
           images: [],
         },
-        channel_id: "",
+        channel_id: '',
       },
       extensions: [
         new CodeView(), //代码显示
@@ -111,8 +96,8 @@ export default {
         new Image({
           uploadRequest(file) {
             const fd = new FormData()
-            fd.append("image", file)
-            return uploadimg(fd).then((res) => {
+            fd.append('image', file)
+            return uploadimg(fd).then(res => {
               return res.data.data.url
             })
           },
@@ -135,34 +120,34 @@ export default {
   methods: {
     onSubmit(draft = false) {
       if (this.$route.query.id) {
-        editArticle(this.$route.query.id, this.article, draft).then((res) => {
+        editArticle(this.$route.query.id, this.article, draft).then(res => {
           this.$message({
-            message: `${draft ? "存入草稿" : "发布"}成功`,
-            type: "success",
+            message: `${draft ? '存入草稿' : '发布'}成功`,
+            type: 'success',
           })
           // 跳转到内容管理页面
-          this.$router.push("/article")
+          this.$router.push('/article')
         })
       } else {
-        publishArticle(this.article, draft).then((res) => {
+        publishArticle(this.article, draft).then(res => {
           console.log(res.data.data.id)
           this.$message({
-            message: `${draft ? "存入草稿" : "发布"}成功`,
-            type: "success",
+            message: `${draft ? '存入草稿' : '发布'}成功`,
+            type: 'success',
           })
           // 跳转到内容管理页面
-          this.$router.push("/article")
+          this.$router.push('/article')
         })
       }
     },
     loadchannels() {
-      getchannels().then((res) => {
+      getchannels().then(res => {
         this.channelList = res.data.data.channels
       })
     },
     loadgetArticle() {
       let articleId = this.$route.query.id
-      getArticle(articleId).then((res) => {
+      getArticle(articleId).then(res => {
         // console.log(res.data.data)
         this.article = res.data.data
       })

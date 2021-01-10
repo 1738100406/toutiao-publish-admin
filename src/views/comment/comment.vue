@@ -20,7 +20,7 @@
         </el-table-column>
         <el-table-column prop="comment_status" label="评论状态">
           <template slot-scope="scope">
-            {{ scope.row.comment_status ? "启用" : "未启用" }}
+            {{ scope.row.comment_status ? '启用' : '未启用' }}
           </template>
         </el-table-column>
         <el-table-column prop="comment_status" label="操作">
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { getarticle, edidArticle } from "@/api/article"
+import { getarticle, edidArticle } from '@/api/article'
 export default {
   data() {
     return {
@@ -62,7 +62,7 @@ export default {
     loadAdricle(page = 1) {
       getarticle({
         page,
-        response_type: "comment",
+        response_type: 'comment',
       }).then((res) => {
         res.data.data.results.map((v) => {
           v.stateDisable = false
@@ -77,8 +77,8 @@ export default {
       edidArticle(item.id, item.comment_status).then((res) => {
         item.stateDisable = false
         this.$message({
-          message: item.comment_status ? "开启成功" : "关闭成功",
-          type: "success",
+          message: item.comment_status ? '开启成功' : '关闭成功',
+          type: 'success',
         })
       })
     },
