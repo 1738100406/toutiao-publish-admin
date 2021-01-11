@@ -11,24 +11,12 @@
         <el-radio-button :label="false">全部</el-radio-button>
         <el-radio-button :label="true">收藏</el-radio-button>
       </el-radio-group>
-      <el-button type="success">上传素材</el-button>
+      <el-button type="success" @click="dialogopen">上传素材</el-button>
     </div>
     <div style="margin:20px 0px;">
       <el-row :gutter="10">
-        <el-col
-          :xs="8"
-          :sm="6"
-          :md="4"
-          :lg="3"
-          :xl="1"
-          v-for="(item, index) in imgList"
-          :key="index"
-        >
-          <el-image
-            style="width: 100px; height: 100px"
-            :src="item.url"
-            fit="cover"
-          ></el-image>
+        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1" v-for="(item, index) in imgList" :key="index">
+          <el-image style="width: 100px; height: 100px" :src="item.url" fit="cover"></el-image>
         </el-col>
       </el-row>
     </div>
@@ -39,11 +27,22 @@
       :current-page.sync="page"
     >
     </el-pagination>
+    <el-dialog title="提示" @closed="closedplay" append-to-body :visible.sync="dialogVisible" width="600px">
+      <div>
+        <video ref="video" autoplay="autoplay" width="500" preload controls controlslist="nodownload" loop>
+          <source src="https://demo.jeecms.com/u/cms/www/202010/14162955f8sw.mp4" />
+        </video>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </el-card>
 </template>
 
 <script>
-import { getimageList } from "@/api/article"
+import { getimageList } from '@/api/article'
 export default {
   data() {
     return {
@@ -51,6 +50,7 @@ export default {
       totalCount: null,
       page: 1,
       iscollect: false, //是否收藏
+      dialogVisible: false,
     }
   },
 
@@ -67,7 +67,7 @@ export default {
         collect: this.iscollect,
         page,
         per_page: 20,
-      }).then((res) => {
+      }).then(res => {
         console.log(res)
         this.imgList = res.data.data.results
         this.totalCount = res.data.data.total_count
@@ -75,6 +75,15 @@ export default {
     },
     changePage(page) {
       this.loadImageList(page)
+    },
+    dialogopen() {
+      this.dialogVisible = true
+      console.log(this.$refs.video)
+      this.$refs.video.play()
+    },
+    closedplay() {
+      this.$refs.video.pause()
+      this.$refs.video.currentTime = 0
     },
   },
 

@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    default-active="/"
+    :default-active="$route.path"
     class="el-menu-vertical-aside"
     @open="handleOpen"
     @close="handleClose"
@@ -43,7 +43,7 @@
 
 <script>
 export default {
-  props: ["isCollapse"],
+  props: ['isCollapse'],
   data() {
     return {}
   },
